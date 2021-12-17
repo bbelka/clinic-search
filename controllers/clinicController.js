@@ -8,7 +8,11 @@ module.exports = {
                 url: 'https://storage.googleapis.com/scratchpay-code-challenge/vet-clinics.json',
                 method: 'get'
             });
-            res.status(200).json(vetClinics.data);
+            const dentalClinics = await axios({
+                url: 'https://storage.googleapis.com/scratchpay-code-challenge/dental-clinics.json',
+                method: 'get'
+            });
+            res.status(200).json({ vet: vetClinics.data, dentist: dentalClinics.data });
         } catch {
             res.status(500).json({ message: err })
         }
