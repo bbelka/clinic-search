@@ -10,21 +10,34 @@ module.exports = {
 
         try {
 
-            //get vetCinics
-            const vetClinics = await axios({
-                url: 'https://storage.googleapis.com/scratchpay-code-challenge/vet-clinics.json',
-                method: 'get'
-            });
-            //add vetClinics to results array
-            vetClinics.data.forEach(clinic => results.push(clinic))
+            //declare get vetCinics
+            const getVetClinics = async () => {
+                await axios({
+                    url: 'https://storage.googleapis.com/scratchpay-code-challenge/vet-clinics.json',
+                    method: 'get'
+                })
+                    //add vetClinics to results array
+                    .then(res => res.data.forEach(clinic => results.push(clinic)))
+            };
 
-            //get dentalClinics
-            const dentalClinics = await axios({
-                url: 'https://storage.googleapis.com/scratchpay-code-challenge/dental-clinics.json',
-                method: 'get'
-            });
-            //add dentalClinics to results array
-            dentalClinics.data.forEach(clinic => results.push(clinic))
+            //declare get dentalClinics
+            const getDentalClinics = async () => {
+                await axios({
+                    url: 'https://storage.googleapis.com/scratchpay-code-challenge/dental-clinics.json',
+                    method: 'get'
+                })
+                    //add dentalClinics to results array
+                    .then(res => res.data.forEach(clinic => results.push(clinic)))
+            };
+
+            //if type query parameter, only get corresponding data
+            if (query.type) {
+                if (query.type === 'vet') await getVetClinics();
+                if (query.type === 'dental') await getDentalClinics();
+            } else {
+                await getVetClinics();
+                await getDentalClinics();
+            };
 
             //if name query parameter, filter data by name
             if (query.name) {
@@ -48,16 +61,16 @@ module.exports = {
                 //filter results
                 results = results.filter(clinic => {
 
-                        //each data set has different property names, so seperate filters for each dataset
-                        if (clinic.hasOwnProperty('stateCode')) {
-                            const clinicState = states(clinic.stateCode).usps;
-                            return clinicState === state;
-                        };
-                        if (clinic.hasOwnProperty('stateName')) {
-                            const clinicState = states(clinic.stateName).usps;
-                            return clinicState === state;
-                        };
-                    });
+                    //each data set has different property names, so seperate filters for each dataset
+                    if (clinic.hasOwnProperty('stateCode')) {
+                        const clinicState = states(clinic.stateCode).usps;
+                        return clinicState === state;
+                    };
+                    if (clinic.hasOwnProperty('stateName')) {
+                        const clinicState = states(clinic.stateName).usps;
+                        return clinicState === state;
+                    };
+                });
             };
 
             //if from query parameter, filter data by from 
@@ -95,5 +108,3 @@ module.exports = {
 
     }
 };
-
-//dates must be 24 hr as string
