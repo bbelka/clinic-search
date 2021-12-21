@@ -1,15 +1,13 @@
 const axios = require('axios');
-const states = require('us-state-converter')
+const states = require('us-state-converter');
 
 
 module.exports = {
     search: async ({ query }, res) => {
-        // console.log(query);
 
         //declare results array
         let results = new Array;
 
-        const fromValid = query.from < '09:00';
         try {
 
             //get vetCinics
@@ -28,16 +26,16 @@ module.exports = {
             //add dentalClinics to results array
             dentalClinics.data.forEach(clinic => results.push(clinic))
 
-            // let filtered = results;
-
             //if name query parameter, filter data by name
             if (query.name) {
-                results = (results.filter(clinic => {
+
+                results = results.filter(clinic => {
+
                     //each data set has different property names, so seperate filters for each dataset
-                        //correct for capitalization differences
-                    if (clinic.hasOwnProperty('name')) return clinic.name.toLowerCase().includes(query.name.toLowerCase());
-                    if (clinic.hasOwnProperty('clinicName')) return clinic.clinicName.toLowerCase().includes(query.name.toLowerCase());
-                }));
+                    //correct for capitalization differences
+                    if (clinic.hasOwnProperty('name')) clinic.name.toLowerCase().includes(query.name.toLowerCase());
+                    if (clinic.hasOwnProperty('clinicName')) clinic.clinicName.toLowerCase().includes(query.name.toLowerCase());
+                });
             };
 
             //if state query parameter, filter data by state
@@ -49,24 +47,52 @@ module.exports = {
 
                 //filter results
                 results =
+
                     results.filter(clinic => {
 
                         //each data set has different property names, so seperate filters for each dataset
                         if (clinic.hasOwnProperty('stateCode')) {
                             const clinicState = states(clinic.stateCode).usps;
                             return clinicState === state;
-                        }
+                        };
                         if (clinic.hasOwnProperty('stateName')) {
                             const clinicState = states(clinic.stateName).usps;
                             return clinicState === state;
-                        }
+                        };
                     });
             };
-            // res.status(200).json({ vet: vetClinics.data, dentist: dentalClinics.data });
-            res.status(200).json({ data: results })
+
+            //if from query parameter, filter data by from 
+            if (query.from) {
+                results = results.filter(clinic => {
+
+                    //each data set has different property names, so seperate filters for each dataset
+                    if (clinic.hasOwnProperty('availability') && clinic.availability.hasOwnProperty('from')) {
+                        return clinic.availability.from <= query.from;
+                    };
+                    if (clinic.hasOwnProperty('opening') && clinic.opening.hasOwnProperty('from')) {
+                        return clinic.opening.from <= query.from;
+                    };
+                });
+            };
+
+            //if to query parameter, filter data by to 
+            if (query.to) {
+                results = results.filter(clinic => {
+
+                    //each data set has different property names, so seperate filters for each dataset
+                    if (clinic.hasOwnProperty('availability') && clinic.availability.hasOwnProperty('to')) {
+                        return clinic.availability.to >= query.to;
+                    };
+                    if (clinic.hasOwnProperty('opening') && clinic.opening.hasOwnProperty('to')) {
+                        return clinic.opening.to >= query.to;
+                    };
+                });
+            };
+
+            res.status(200).json({ data: results });
         } catch (err) {
-            console.error(err)
-            res.status(500).json({ message: err })
+            res.status(500).json({ message: err });
         }
 
     }
