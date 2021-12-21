@@ -34,10 +34,11 @@ Add and of the following query parameters to the enpioint and filter the results
 ## **Example Querys**
 Build a query as you would with most api's.
 * See above for more info on specific parameters.
-* ` host/api/clinic?name=good%clinic&state=kansas`
+* ` {host}/api/clinic?name=good%clinic&state=kansas`
 
 ## **Testing**
-* Jest was implemented as the testing suite for this project. They are contained within the test folder and, if you're interested, you can clone the repository from [Github](https://github.com/bbelka/clinic-search). The testing script command is the customary `npm run test`.
+* [Jest](https://jestjs.io/) was implemented as the testing suite for this project.
+* The tests are contained within the test folder. If you're interested, you can clone the repository from [Github](https://github.com/bbelka/clinic-search). The testing script command is the customary `npm run test`.
 * Once each filter was verified via the testing suite, Postman was utilized to verify that the filters could be used in conjunction with on another.
 
 ## **Memory Efficiency**
