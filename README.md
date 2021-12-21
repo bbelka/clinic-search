@@ -6,7 +6,8 @@ ___
 
 There are anumber of options here. Below, find links to your favorite way to consume this content.
 *  [Github repo](https://github.com/bbelka/clinic-search)
-   *  You're may be here already (depending on where you're reading). If so, just clone, install the dependencies, and run `npm run start` in the root of the project.
+   * You may be here already (depending on where you're reading). If so, just clone, install the dependencies, and run `npm run start` in the root of the project.
+   * *note: the entry point is `index.js`, not `server.js` due to testing requirements.*
 *  [Docker repo](https://hub.docker.com/r/bbelka/clinic-search)
    * If you are set up to use docker, pull this container down here.
 *  [Deployed link](https://bb-clinic-search.herokuapp.com/api/clinic)
