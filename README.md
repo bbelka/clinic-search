@@ -34,3 +34,7 @@ Add and of the following query parameters to the enpioint and filter the results
 
 ## **Memory Efficiency**
 While the this api utilizes a number of iterators, they are in parallel and the time complexity should be 0(n log n).
+
+## **Contact**
+- Find me on [Linkedin](https://www.linkedin.com/in/brettbelka/)
+- Shoot me an email bbelka@gmail.com
