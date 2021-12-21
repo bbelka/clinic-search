@@ -33,8 +33,8 @@ module.exports = {
 
                     //each data set has different property names, so seperate filters for each dataset
                     //correct for capitalization differences
-                    if (clinic.hasOwnProperty('name')) clinic.name.toLowerCase().includes(query.name.toLowerCase());
-                    if (clinic.hasOwnProperty('clinicName')) clinic.clinicName.toLowerCase().includes(query.name.toLowerCase());
+                    if (clinic.hasOwnProperty('name')) return clinic.name.toLowerCase().includes(query.name.toLowerCase());
+                    if (clinic.hasOwnProperty('clinicName')) return clinic.clinicName.toLowerCase().includes(query.name.toLowerCase());
                 });
             };
 
