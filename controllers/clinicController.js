@@ -46,9 +46,7 @@ module.exports = {
                 const state = states(query.state).usps;
 
                 //filter results
-                results =
-
-                    results.filter(clinic => {
+                results = results.filter(clinic => {
 
                         //each data set has different property names, so seperate filters for each dataset
                         if (clinic.hasOwnProperty('stateCode')) {
