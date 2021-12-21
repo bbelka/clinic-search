@@ -58,3 +58,25 @@ test('Inputing only abbreviated state parameter returns results filtered by stat
             })
         });
 });
+
+test('Inputing from paramater returns results with from values <= the query parameter', async () => {
+    await supertest(app).get('/api/clinic?from=08:00')
+        .expect(200)
+        .then((response) => {
+            response.body.data.forEach(clinic => {
+                if (clinic.availability) { expect(clinic.availability.from <= "08:00").toBeTruthy() }
+                else { expect(clinic.opening.from <= "08:00").toBeTruthy() };
+            });
+        });
+});
+
+test('Inputing from paramater returns results with from values <= the query parameter', async () => {
+    await supertest(app).get('/api/clinic?to=21:00')
+        .expect(200)
+        .then((response) => {
+            response.body.data.forEach(clinic => {
+                if (clinic.availability) { expect(clinic.availability.to >= "21:00").toBeTruthy() }
+                else { expect(clinic.opening.to >= "21:00").toBeTruthy() };
+            });
+        });
+});
