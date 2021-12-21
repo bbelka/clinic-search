@@ -21,12 +21,20 @@ ___
 
 ## **Query Parameters**
 Add and of the following query parameters to the enpioint and filter the results as you like.
+
+*note: ability to filter by clinic type was specifically not included because it was not requested in the problem and would take only a few minutes to add.*
+
 |Parameter|Explanation|
 |:---|:---|
 |`name`|Add this parameter to filter results by names including those letters in that order. It is not case sensitive. Spaces can be represented with the modulus (`%`) character.|
 |`state`|Add this parameter to filter results by state. Use the full name of the state or the USPS abbreviation.|
-|`from`|Add this parameter to filter results by opening time. It returns all clinics which will be open at that time (open before input time).|
-|`to`|Add this parameter to filter results by closing time. It returns all clinics which will still be open at that time (close after input time).|
+|`from`|Add this parameter to filter results by opening time. It returns all clinics which will be open at that time (open before input time).This must be in 24-hour formatt (hh:mm).|
+|`to`|Add this parameter to filter results by closing time. It returns all clinics which will still be open at that time (close after input time). This must be in 24-hour formatt (hh:mm).|
+
+## **Example Querys**
+Build a query as you would with most api's.
+* See above for more info on specific parameters.
+* ` host/api/clinic?name=good%clinic&state=kansas`
 
 ## **Testing**
 * Jest was implemented as the testing suite for this project. They are contained within the test folder and, if you're interested, you can clone the repository from [Github](https://github.com/bbelka/clinic-search). The testing script command is the customary `npm run test`.
