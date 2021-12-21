@@ -1,0 +1,19 @@
+{
+  "name": "clinic-search",
+  "author": "Brett Belka",
+  "description": "A simple express server, written for Scratchpay to query two different endpoints, filter the data based upon query parameters and return the list of matching results",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "express": "^4.17.1",
+    "supertest": "^6.1.6",
+    "us-state-converter": "^1.0.6"
+  },
+  "devDependencies": {
+    "jest": "^27.4.5"
+  }
+}
